@@ -20,14 +20,12 @@ const pictures = galleryItems
 
 gallery.insertAdjacentHTML("afterbegin", pictures);
 
-gallery.addEventListener("click", openPicture);
-
-var lightboxGallery = new SimpleLightbox(".gallery a", {
+const lightboxGallery = new SimpleLightbox(".gallery a", {
   enableKeyboard: true,
   captionDelay: 250,
 });
 
-function openPicture(event) {
-  event.preventDefault();
-  lightboxGallery.open();
-}
+gallery.addEventListener("click", () => {
+  if (!lightboxGallery) return;
+  lightboxGallery.open;
+});

@@ -25,18 +25,20 @@ gallery.addEventListener("click", openPicture);
 function openPicture(event) {
   event.preventDefault();
   const imgUrl = event.target.dataset.source;
-  const instance = basicLightbox.create(`
-    <img src="${imgUrl}" width="800" height="600">
-`);
+
+  if (!imgUrl) return;
 
   const imageClose = (event) => {
     if (event.key === "Escape")
-      instance.close(() => {
-        document.removeEventListener("keydown", imageClose);
-      });
+      instance.close();
   };
 
-  document.addEventListener("keydown", imageClose);
+  const instance = basicLightbox.create(`
+    <img src="${imgUrl}" width="800" height="600">
+`, {
+    onShow: () => {document.addEventListener("keydown", imageClose)},
+    onclose: () => {document.removeEventListener("keydown", imageClose)}
+  });
 
   instance.show();
 }
